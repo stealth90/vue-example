@@ -1,11 +1,11 @@
 export interface IRoutesNames {
   home: string;
-  settings: string;
+  about: string;
 }
 
 const routesNames: Readonly<IRoutesNames> = {
   home: "home",
-  settings: "settings",
+  about: "about",
 };
 
 export default routesNames;
