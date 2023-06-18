@@ -1,5 +1,3 @@
-/* import { RouteConfig } from "vue-router"; */
-
 import RoutesNames from "./routesNames";
 
 const routes = [
