@@ -1,10 +1,11 @@
 import RoutesNames from "./routesNames";
+import HomeView from "../views/HomeView.vue";
 
 const routes = [
   {
     path: "/",
     name: RoutesNames.home,
-    component: () => import("@/views/HomeView.vue"),
+    component: HomeView,
   },
   {
     path: "/about",

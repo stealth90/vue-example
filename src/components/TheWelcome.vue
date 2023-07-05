@@ -6,8 +6,11 @@ import EcosystemIcon from "./icons/IconEcosystem.vue";
 import CommunityIcon from "./icons/IconCommunity.vue";
 import SupportIcon from "./icons/IconSupport.vue";
 import { useCounterStore } from "../stores/counter";
+import { ref } from "vue";
 
 const counter = useCounterStore();
+
+const myValue = ref("ciao");
 </script>
 
 <template>
@@ -22,7 +25,7 @@ const counter = useCounterStore();
     <a target="_blank" href="https://vuejs.org/">official documentation</a>
     provides you with all information you need to get started.
   </WelcomeItem>
-
+  <input v-bind="myValue" />
   <WelcomeItem>
     <template #icon>
       <ToolingIcon />
