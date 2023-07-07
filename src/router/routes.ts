@@ -4,12 +4,14 @@ import HomeView from "../views/HomeView.vue";
 const routes = [
   {
     path: "/",
-    name: RoutesNames.home,
+    name: RoutesNames.HOME,
+    icon: "mdi-history",
     component: HomeView,
   },
   {
-    path: "/about",
-    name: RoutesNames.about,
+    path: "/todo_list",
+    name: RoutesNames.TODO_LIST,
+    icon: "mdi-heart",
     component: () => import("@/views/AboutView.vue"),
   },
 ];

@@ -20,9 +20,27 @@ const handleCreateTodo = (newTodo: string) => {
 </script>
 
 <template>
-  <h1>This is an home page</h1>
-  <AddTodo @create-todo="handleCreateTodo" />
-  <ul>
-    <TodoItem v-for="todo in todos" :key="todo.id" :todo="todo" />
-  </ul>
+  <main>
+    <h1>Create a todo</h1>
+    <AddTodo @create-todo="handleCreateTodo" />
+    <ul>
+      <TodoItem v-for="todo in todos" :key="todo.id" :todo="todo" />
+    </ul>
+  </main>
 </template>
+
+<style scoped lang="scss">
+main {
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 40px 16px;
+
+  h1 {
+    margin-bottom: 16px;
+    text-align: center;
+  }
+}
+</style>
