@@ -38,6 +38,12 @@ const checkValidity = (e: Event) => {
     }
   }
 };
+
+const onKeyPress = (e: KeyboardEvent) => {
+  if (e.code === "Enter") {
+    createTodo();
+  }
+};
 </script>
 
 <template>
@@ -47,6 +53,7 @@ const checkValidity = (e: Event) => {
       @change="checkValidity($event)"
       placeholder="New todo..."
       v-model="newTodoState.name"
+      @keypress="onKeyPress($event)"
     />
     <button
       class="add-todo__button"
@@ -55,8 +62,8 @@ const checkValidity = (e: Event) => {
     >
       Add
     </button>
-    <p v-show="!newTodoState.isValid">{{ newTodoState.error }}</p>
   </div>
+  <p v-show="!newTodoState.isValid">{{ newTodoState.error }}</p>
 </template>
 
 <style scoped lang="scss">

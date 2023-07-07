@@ -17,5 +17,9 @@ const props = defineProps<{
 .todo-item {
   display: flex;
   background-color: #fff;
+  margin: 1rem;
+  &__name {
+    color: #000;
+  }
 }
 </style>

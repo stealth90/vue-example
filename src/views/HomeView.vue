@@ -8,14 +8,12 @@ import TodoItem from "@/components/TodoItem.vue";
 const todos = ref<Todo[]>([]);
 
 const handleCreateTodo = (newTodo: string) => {
-  console.log({ newTodo });
   todos.value.push({
     id: uid(),
     completed: false,
     editMode: false,
     name: newTodo,
   });
-  console.log({ todos: todos.value });
 };
 </script>
 
