@@ -1,5 +1,8 @@
 <script setup lang="ts">
-import { RouterLink } from "vue-router";
+import routes from "@/router/routes";
+import { RouterLink, useRouter } from "vue-router";
+import { capitalize } from "@/utils";
+const router = useRouter();
 </script>
 
 <template>
@@ -13,12 +16,18 @@ import { RouterLink } from "vue-router";
           width="25"
           height="25"
         />
-        <h1>Vue Todos</h1>
+        <h1>
+          {{ capitalize(router?.currentRoute?.value?.name as string) }}
+        </h1>
       </div>
 
       <ul class="nav-routes">
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
+        <RouterLink
+          v-for="route in routes"
+          :to="route.path"
+          :key="route.name"
+          >{{ capitalize(route.name) }}</RouterLink
+        >
       </ul>
     </nav>
   </header>

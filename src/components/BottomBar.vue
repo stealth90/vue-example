@@ -1,12 +1,6 @@
 <script setup lang="ts">
 import routes from "@/router/routes";
-
-const capitalize = (sentence: string) => {
-  return sentence
-    .split(" ")
-    .map((el) => `${el.charAt(0).toUpperCase()}${el.slice(1)}`)
-    .join(" ");
-};
+import { capitalize } from "@/utils";
 </script>
 
 <template>
