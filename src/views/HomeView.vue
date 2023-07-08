@@ -15,6 +15,41 @@ const handleCreateTodo = (newTodo: string) => {
     name: newTodo,
   });
 };
+
+const fetchTodoList = () => {
+  if (localStorage.getItem("todoList")) {
+    const savedTodoList = JSON.parse(
+      localStorage.getItem("todoList") as string
+    );
+    todos.value = savedTodoList;
+  }
+};
+
+fetchTodoList();
+
+const setTodoListLocalStorage = () => {
+  localStorage.setItem("todoList", JSON.stringify(todos.value));
+};
+
+const toggleEditTodo = (todoPos: number) => {
+  todos.value[todoPos].editMode = !todos.value[todoPos].editMode;
+  setTodoListLocalStorage();
+};
+
+const updateTodo = (todoVal: string, todoPos: number) => {
+  todos.value[todoPos].name = todoVal;
+  setTodoListLocalStorage();
+};
+
+const toggleTodoComplete = (todoPos: number) => {
+  todos.value[todoPos].completed = !todos.value[todoPos].completed;
+  setTodoListLocalStorage();
+};
+
+const deleteTodo = (todo: Todo) => {
+  todos.value = todos.value.filter((todoFilter) => todoFilter.id !== todo.id);
+  setTodoListLocalStorage();
+};
 </script>
 
 <template>
@@ -22,7 +57,16 @@ const handleCreateTodo = (newTodo: string) => {
     <h1>Create a todo</h1>
     <AddTodo @create-todo="handleCreateTodo" />
     <ul>
-      <TodoItem v-for="todo in todos" :key="todo.id" :todo="todo" />
+      <TodoItem
+        v-for="(todo, index) in todos"
+        :key="todo.id"
+        :todo="todo"
+        :index="index"
+        @edit-todo="toggleEditTodo"
+        @update-todo="updateTodo"
+        @toggle-complete="toggleTodoComplete"
+        @delete-todo="deleteTodo"
+      />
     </ul>
   </main>
 </template>

@@ -5,7 +5,7 @@ const routes = [
   {
     path: "/",
     name: RoutesNames.HOME,
-    icon: "mdi-history",
+    icon: "ri:todo-line",
     component: HomeView,
   },
   {
