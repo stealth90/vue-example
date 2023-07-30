@@ -1,13 +1,9 @@
 {
   "extends": "@vue/tsconfig/tsconfig.web.json",
-  "include": ["src/**/*"],
-  "exclude": ["src/**/__tests__/*"],
+  "include": ["src/**/*", "vite.config.ts"],
   "compilerOptions": {
-    "isolatedModules": true,
     "composite": true,
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./src/*"]
-    }
+    "module": "esnext",
+    "moduleResolution": "node"
   }
 }
