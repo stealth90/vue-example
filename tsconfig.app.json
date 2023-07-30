@@ -2,8 +2,13 @@
   "extends": "@vue/tsconfig/tsconfig.web.json",
   "include": ["src/**/*", "vite.config.ts"],
   "compilerOptions": {
+    "isolatedModules": true,
     "composite": true,
     "module": "esnext",
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "types": ["node", "jsdom"]
   }
 }

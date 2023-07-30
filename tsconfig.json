@@ -11,6 +11,7 @@
     "isolatedModules": true,
     "esModuleInterop": true,
     "lib": ["esnext", "dom"],
+    "types": ["cypress","jest","mocha","node"],
     "skipLibCheck": true
   },
   "include": [
@@ -20,6 +21,7 @@
     "src/**/*.vue",
     "cypress.d.ts"
   ],
+  "extends": "./tsconfig.app.json",
   "references": [
     {
       "path": "./tsconfig.vite-config.json"
