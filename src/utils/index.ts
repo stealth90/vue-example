@@ -39,14 +39,13 @@ export const generateRandomColor = (): {
   ];
   const newColor = [];
   while (newColor.length < 6) {
-    const color =
-      HEX_CODE_VALUES[Math.round(Math.random() * HEX_CODE_VALUES.length)] + "";
+    const randomNumber = Math.floor(Math.random() * HEX_CODE_VALUES.length);
+    const color = HEX_CODE_VALUES[randomNumber] + "";
     newColor.push(color);
   }
 
   const backgroundColor = `#${newColor.join("")}`;
   const color = pickTextColorBasedOnBgColorSimple(backgroundColor);
-
   return { backgroundColor, color };
 };
 

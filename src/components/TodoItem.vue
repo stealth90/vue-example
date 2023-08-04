@@ -97,7 +97,6 @@ li {
     display: flex;
     align-items: center;
     padding-left: 0.5rem;
-    color: var(--color-text);
   }
 
   .todo {
