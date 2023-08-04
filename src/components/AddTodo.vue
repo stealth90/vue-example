@@ -70,7 +70,7 @@ const onKeyPress = (e: KeyboardEvent) => {
 .add-todo {
   display: flex;
   &__input {
-    color: #fff;
+    color: var(--color-text);
     border: 1px solid;
     border-color: gray;
     border-right: 0;
@@ -86,8 +86,8 @@ const onKeyPress = (e: KeyboardEvent) => {
     }
   }
   &__button {
-    background-color: #fff;
-    color: #000;
+    background-color: var(--color-background);
+    color: var(--color-text);
     padding: 0 1rem;
     font-size: 12px;
   }

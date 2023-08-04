@@ -73,7 +73,8 @@ li {
   background-color: #515151;
   box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
     0 8px 10px -6px rgb(0 0 0 / 0.1);
-
+  border-radius: 5rem 0 0 5rem;
+  margin-top: 1rem;
   &:hover {
     .todo-actions {
       opacity: 1;
@@ -98,6 +99,7 @@ li {
     display: flex;
     align-items: center;
     padding-left: 0.5rem;
+    color: var(--color-text);
   }
 
   .todo {
@@ -111,7 +113,7 @@ li {
       width: 100%;
       padding: 2px 6px;
       border: 2px solid #41b080;
-      color: #fff;
+      color: var(--color-text);
     }
   }
 

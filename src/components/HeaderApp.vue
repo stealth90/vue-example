@@ -2,7 +2,36 @@
 import routes from "@/router/routes";
 import { RouterLink, useRouter } from "vue-router";
 import { capitalize } from "@/utils";
+import { ref } from "vue";
+import type { UserTheme } from "@/App.vue";
+import { onUpdated } from "vue";
 const router = useRouter();
+
+const parseTheme = (theme: string): UserTheme => {
+  return theme === `🌙` ? "dark" : "light";
+};
+
+const stringifyTheme = (theme: UserTheme): string => {
+  return theme === "dark" ? `🌙` : `☀️`;
+};
+
+const getTheme = (): string => {
+  return stringifyTheme(localStorage.getItem("user-theme") as UserTheme);
+};
+
+const setTheme = (theme: string) => {
+  const themeParsed = parseTheme(theme);
+  localStorage.setItem("user-theme", themeParsed);
+  document.documentElement.className = themeParsed;
+};
+
+const themeValue = ref(getTheme());
+
+onUpdated(() => {
+  if (themeValue.value) {
+    setTheme(themeValue.value);
+  }
+});
 </script>
 
 <template>
@@ -29,6 +58,16 @@ const router = useRouter();
           >{{ capitalize(route.name) }}</RouterLink
         >
       </ul>
+      <v-switch
+        hide-details
+        false-value="☀️"
+        true-value="🌙"
+        :label="themeValue"
+        class="theme-switch"
+        inset
+        v-model="themeValue"
+        value="false"
+      ></v-switch>
     </nav>
   </header>
 </template>
@@ -68,6 +107,12 @@ header {
         text-decoration: none;
         color: inherit;
       }
+    }
+
+    .theme-switch {
+      display: flex;
+      flex: initial;
+      margin-left: 1rem;
     }
   }
 }
