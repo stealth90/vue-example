@@ -15,7 +15,6 @@ const emit = defineEmits<{
 
 const createTodo = () => {
   if (newTodoState.name) {
-    console.log({ newTodoState: newTodoState.name });
     emit("create-todo", newTodoState.name);
     newTodoState.name = "";
     newTodoState.isValid = true;
@@ -86,8 +85,8 @@ const onKeyPress = (e: KeyboardEvent) => {
     }
   }
   &__button {
-    background-color: var(--color-background);
-    color: var(--color-text);
+    background-color: var(--color-text);
+    color:  var(--color-background);
     padding: 0 1rem;
     font-size: 12px;
   }

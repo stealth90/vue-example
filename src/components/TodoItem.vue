@@ -7,7 +7,7 @@ defineEmits(["edit-todo", "update-todo", "toggle-complete", "delete-todo"]);
 </script>
 
 <template>
-  <li>
+  <li :style="{ backgroundColor: todo.backgroundColor, color: todo.color }">
     <input
       type="checkbox"
       :checked="todo.completed"
@@ -70,10 +70,8 @@ li {
   align-items: center;
   gap: 10px;
   padding: 16px 10px;
-  background-color: #515151;
-  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
-    0 8px 10px -6px rgb(0 0 0 / 0.1);
-  border-radius: 5rem 0 0 5rem;
+  box-shadow: 0px 0px 25px 1px rgba(0, 0, 0, 0.1);
+  border-radius: 5rem;
   margin-top: 1rem;
   &:hover {
     .todo-actions {
@@ -88,7 +86,7 @@ li {
     background-color: #fff;
     border-radius: 50%;
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-
+    cursor: pointer;
     &:checked {
       background-color: #41b080;
     }

@@ -3,6 +3,8 @@ export type Todo = {
   name: string;
   completed: boolean;
   editMode: boolean;
+  color: string;
+  backgroundColor:string;
 };
 
 export type NewTodo = {

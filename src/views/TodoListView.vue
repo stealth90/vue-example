@@ -4,6 +4,7 @@ import type { Todo } from "@/types";
 import { ref } from "vue";
 import { uid } from "uid";
 import TodoItem from "@/components/TodoItem.vue";
+import { generateRandomColor } from "@/utils";
 
 const todos = ref<Todo[]>([]);
 
@@ -13,7 +14,9 @@ const handleCreateTodo = (newTodo: string) => {
     completed: false,
     editMode: false,
     name: newTodo,
+    ...generateRandomColor(),
   });
+  setTodoListLocalStorage()
 };
 
 const fetchTodoList = () => {
