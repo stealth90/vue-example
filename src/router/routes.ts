@@ -1,16 +1,16 @@
 import RoutesNames from "./routesNames";
-import HomeView from "../views/HomeView.vue";
+import TodoListView from "../views/TodoListView.vue";
 
 const routes = [
   {
     path: "/",
-    name: RoutesNames.HOME,
+    name: RoutesNames.TODO_LIST,
     icon: "ri:todo-line",
-    component: HomeView,
+    component: TodoListView,
   },
   {
-    path: "/todo_list",
-    name: RoutesNames.TODO_LIST,
+    path: "/home",
+    name: RoutesNames.HOME,
     icon: "mdi-heart",
     component: () => import("@/views/AboutView.vue"),
   },

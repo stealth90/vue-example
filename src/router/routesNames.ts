@@ -5,7 +5,7 @@ export interface IRoutesNames {
 
 const routesNames: Readonly<IRoutesNames> = {
   HOME: "home",
-  TODO_LIST: "todo list",
+  TODO_LIST: "todo",
 };
 
 export default routesNames;
