@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import routes from "@/router/routes";
+import { ref, onUpdated } from "vue";
 import { RouterLink, useRouter } from "vue-router";
+import routes from "@/router/routes";
 import { capitalize } from "@/utils";
-import { ref } from "vue";
 import type { UserTheme } from "@/App.vue";
-import { onUpdated } from "vue";
 const router = useRouter();
 
 const parseTheme = (theme: string): UserTheme => {

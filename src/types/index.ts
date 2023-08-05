@@ -12,3 +12,14 @@ export type NewTodo = {
   isValid: boolean;
   error: string;
 };
+
+export type Note = {
+  id: string;
+  name: string;
+};
+
+export type NewNote = {
+  name: string;
+  isValid: boolean;
+  error: string;
+};

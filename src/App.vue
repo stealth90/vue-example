@@ -4,9 +4,9 @@ import BottomBar from "@/components/BottomBar.vue";
 import HeaderApp from "@/components/HeaderApp.vue";
 import { onMounted } from "vue";
 
-export type UserTheme = 'light' | 'dark';
+export type UserTheme = "light" | "dark";
 
-const getMediaPreference = () : UserTheme  => {
+const getMediaPreference = (): UserTheme => {
   const hasDarkPreference = window.matchMedia(
     "(prefers-color-scheme: dark)"
   ).matches;
@@ -33,13 +33,26 @@ onMounted(() => {
 </script>
 
 <template>
-  <HeaderApp />
-  <RouterView />
-  <BottomBar />
+  <div class="app">
+    <HeaderApp />
+    <div class="router-content">
+      <RouterView />
+    </div>
+    <BottomBar />
+  </div>
 </template>
 
 <style lang="scss">
 @import "@/assets/base.css";
+  .app{
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
+  }
+  .router-content {
+    flex: 1;
+    overflow-y: auto;
+  }
 
 @media (hover: hover) {
   a:hover {
