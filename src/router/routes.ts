@@ -9,10 +9,10 @@ const routes = [
     component: TodoListView,
   },
   {
-    path: "/home",
-    name: RoutesNames.HOME,
+    path: "/note",
+    name: RoutesNames.NOTE,
     icon: "mdi-heart",
-    component: () => import("@/views/AboutView.vue"),
+    component: () => import("@/views/NoteView.vue"),
   },
 ];
 
