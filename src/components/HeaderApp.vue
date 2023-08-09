@@ -1,41 +1,24 @@
 <script setup lang="ts">
 import { ref, onUpdated } from "vue";
-import { RouterLink, useRouter } from "vue-router";
-import routes from "@/router/routes";
+import { useRouter } from "vue-router";
 import { capitalize } from "@/utils";
-import type { UserTheme } from "@/App.vue";
+import { Icon } from "@iconify/vue";
 const router = useRouter();
 
-const parseTheme = (theme: string): UserTheme => {
-  return theme === `🌙` ? "dark" : "light";
-};
-
-const stringifyTheme = (theme: UserTheme): string => {
-  return theme === "dark" ? `🌙` : `☀️`;
-};
-
-const getTheme = (): string => {
-  return stringifyTheme(localStorage.getItem("user-theme") as UserTheme);
-};
-
-const setTheme = (theme: string) => {
-  const themeParsed = parseTheme(theme);
-  localStorage.setItem("user-theme", themeParsed);
-  document.documentElement.className = themeParsed;
-};
-
-const themeValue = ref(getTheme());
-
-onUpdated(() => {
-  if (themeValue.value) {
-    setTheme(themeValue.value);
-  }
-});
+defineEmits(["toogle-drawer"]);
 </script>
 
 <template>
   <header class="header">
     <nav class="wrapper">
+      <div class="d-flex justify-center align-center">
+        <Icon
+          width="22"
+          icon="fa6-solid:bars"
+          class="hamburger-icon"
+          @click.stop="$emit('toogle-drawer')"
+        />
+      </div>
       <div class="branding">
         <img
           alt="Vue logo"
@@ -48,25 +31,6 @@ onUpdated(() => {
           {{ capitalize(router?.currentRoute?.value?.name as string) }}
         </h1>
       </div>
-
-      <ul class="nav-routes">
-        <RouterLink
-          v-for="route in routes"
-          :to="route.path"
-          :key="route.name"
-          >{{ capitalize(route.name) }}</RouterLink
-        >
-      </ul>
-      <v-switch
-        hide-details
-        false-value="☀️"
-        true-value="🌙"
-        :label="themeValue"
-        class="theme-switch"
-        inset
-        v-model="themeValue"
-        value="false"
-      ></v-switch>
     </nav>
   </header>
 </template>
@@ -76,6 +40,11 @@ onUpdated(() => {
   max-width: 1100px;
   margin: 0 auto;
 }
+.hamburger-icon {
+  margin-right: 1rem;
+  cursor: pointer;
+}
+
 header {
   nav {
     display: flex;

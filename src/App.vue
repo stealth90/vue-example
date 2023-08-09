@@ -2,9 +2,12 @@
 import { RouterView } from "vue-router";
 import BottomBar from "@/components/BottomBar.vue";
 import HeaderApp from "@/components/HeaderApp.vue";
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
+import AppDrawer from "./components/AppDrawer.vue";
 
 export type UserTheme = "light" | "dark";
+
+const drawer = ref(false);
 
 const getMediaPreference = (): UserTheme => {
   const hasDarkPreference = window.matchMedia(
@@ -26,16 +29,27 @@ const setTheme = (theme: UserTheme) => {
   document.documentElement.className = theme;
 };
 
+const handleToogleDrawer = () => {
+  drawer.value = !drawer.value;
+};
+
 onMounted(() => {
   const initUserTheme = getTheme() || getMediaPreference();
   setTheme(initUserTheme);
 });
+
 </script>
 
 <template>
   <div class="app">
-    <HeaderApp />
-    <div class="router-content">
+    <HeaderApp @toogle-drawer="handleToogleDrawer" />
+    <AppDrawer @close-drawer="handleToogleDrawer" :drawer="drawer" />
+    <div
+      class="router-content"
+      :class="{
+        'drawer-open': drawer,
+      }"
+    >
       <RouterView />
     </div>
     <BottomBar />
@@ -44,15 +58,20 @@ onMounted(() => {
 
 <style lang="scss">
 @import "@/assets/base.css";
-  .app{
-    display: flex;
-    flex-direction: column;
-    height: 100dvh;
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+}
+.router-content {
+  flex: 1;
+  overflow-y: auto;
+  opacity: 1;
+  transition: opacity 300ms;
+  &.drawer-open{
+    opacity: 0.2;
   }
-  .router-content {
-    flex: 1;
-    overflow-y: auto;
-  }
+}
 
 @media (hover: hover) {
   a:hover {
