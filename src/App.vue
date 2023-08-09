@@ -37,21 +37,13 @@ onMounted(() => {
   const initUserTheme = getTheme() || getMediaPreference();
   setTheme(initUserTheme);
 });
-
 </script>
 
 <template>
   <div class="app">
     <HeaderApp @toogle-drawer="handleToogleDrawer" />
     <AppDrawer @close-drawer="handleToogleDrawer" :drawer="drawer" />
-    <div
-      class="router-content"
-      :class="{
-        'drawer-open': drawer,
-      }"
-    >
-      <RouterView />
-    </div>
+    <RouterView />
     <BottomBar />
   </div>
 </template>
@@ -68,7 +60,7 @@ onMounted(() => {
   overflow-y: auto;
   opacity: 1;
   transition: opacity 300ms;
-  &.drawer-open{
+  &.drawer-open {
     opacity: 0.2;
   }
 }

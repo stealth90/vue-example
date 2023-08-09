@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref, onUpdated } from "vue";
 import { useRouter } from "vue-router";
 import { capitalize } from "@/utils";
 import { Icon } from "@iconify/vue";
