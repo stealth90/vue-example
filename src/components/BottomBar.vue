@@ -2,10 +2,13 @@
 import routes from "@/router/routes";
 import { capitalize } from "@/utils";
 import { Icon } from "@iconify/vue";
+import { useDisplay } from "vuetify";
+
+const { mobile } = useDisplay();
 </script>
 
 <template>
-  <v-layout class="overflow-visible bottom-bar">
+  <v-layout v-if="mobile" class="overflow-visible bottom-bar">
     <v-bottom-navigation color="teal" active grow>
       <v-btn v-for="route in routes" :to="route.path" :key="route.name">
         <Icon :icon="route.icon" width="24" />

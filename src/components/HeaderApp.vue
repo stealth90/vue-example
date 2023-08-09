@@ -2,6 +2,9 @@
 import { useRouter } from "vue-router";
 import { capitalize } from "@/utils";
 import { Icon } from "@iconify/vue";
+import { useDisplay } from "vuetify";
+
+const { mobile } = useDisplay();
 const router = useRouter();
 
 defineEmits(["toogle-drawer"]);
@@ -12,6 +15,7 @@ defineEmits(["toogle-drawer"]);
     <nav class="wrapper">
       <div class="d-flex justify-center align-center">
         <Icon
+          v-if="!mobile"
           width="22"
           icon="fa6-solid:bars"
           class="hamburger-icon"
