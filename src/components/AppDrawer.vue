@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import type { UserTheme } from "@/App.vue";
+import routes from "@/router/routes";
 import { onUpdated } from "vue";
+import { Icon } from "@iconify/vue";
 import { ref } from "vue";
+import { capitalize } from "vue";
 
 const props = defineProps<{ drawer: boolean }>();
 const emit = defineEmits(["close-drawer"]);
@@ -40,7 +43,10 @@ onUpdated(() => {
 <template>
   <v-card class="app-drawer">
     <v-layout>
-      <v-navigation-drawer :model-value="props.drawer" temporary>
+      <v-navigation-drawer
+        :model-value="props.drawer"
+        temporary
+      >
         <v-list-item
           prepend-avatar="https://randomuser.me/api/portraits/men/78.jpg"
           title="John Leider"
@@ -48,27 +54,29 @@ onUpdated(() => {
 
         <v-divider></v-divider>
 
-        <v-list density="compact" nav>
+        <v-list density="compact" nav class="navigation-list">
           <v-list-item
-            prepend-icon="mdi-view-dashboard"
-            title="Home"
-            value="home"
-          ></v-list-item>
-          <v-list-item
-            prepend-icon="mdi-forum"
-            title="About"
-            value="about"
-          ></v-list-item>
-          <v-switch
-            hide-details
-            false-value="☀️"
-            true-value="🌙"
-            :label="themeValue"
-            class="theme-switch"
-            inset
-            v-model="themeValue"
-            value="false"
-          ></v-switch>
+            v-for="route in routes"
+            :to="route.path"
+            :key="route.name"
+            :title="capitalize(route.name)"
+            @click="handleCloseDrawer"
+          >
+            <template v-slot:prepend>
+              <Icon :icon="route.icon" class="route-icon" width="22" />
+            </template>
+          </v-list-item>
+          <v-list-item>
+            <v-switch
+              hide-details
+              false-value="☀️"
+              true-value="🌙"
+              :label="themeValue"
+              inset
+              v-model="themeValue"
+              value="false"
+            ></v-switch>
+          </v-list-item>
         </v-list>
       </v-navigation-drawer>
       <div
@@ -85,10 +93,20 @@ onUpdated(() => {
   z-index: 9999999;
 }
 
+.navigation-list {
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - 48px);
+}
+
+.route-icon {
+  margin-right: 1rem;
+}
+
 .drawer-overlay {
   transform: translateX(-150%);
   width: 100vw;
-  background-color: rgba(0,0,0,0);
+  background-color: rgba(0, 0, 0, 0);
   flex: 1;
   transition: background-color 200ms, transform 200ms 0.2s;
   left: 256px;
@@ -100,7 +118,7 @@ onUpdated(() => {
   &.drawer-open {
     transform: translateX(0);
     transition: transform 200ms, background-color 100ms ease-out 0.1s;
-    background-color: rgba(0,0,0,0.8);
+    background-color: rgba(0, 0, 0, 0.2);
   }
 }
 </style>
