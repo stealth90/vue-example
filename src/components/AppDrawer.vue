@@ -88,9 +88,9 @@ onUpdated(() => {
 .drawer-overlay {
   transform: translateX(-150%);
   width: 100vw;
-  opacity: 1;
+  background-color: rgba(0,0,0,0);
   flex: 1;
-  transition: transform 300ms, opacity 300ms;
+  transition: background-color 200ms, transform 200ms 0.2s;
   left: 256px;
   z-index: 1004;
   position: fixed;
@@ -99,7 +99,8 @@ onUpdated(() => {
   bottom: 0px;
   &.drawer-open {
     transform: translateX(0);
-    opacity: 0.1;
+    transition: transform 200ms, background-color 100ms ease-out 0.1s;
+    background-color: rgba(0,0,0,0.8);
   }
 }
 </style>

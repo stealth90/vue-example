@@ -58,11 +58,6 @@ onMounted(() => {
 .router-content {
   flex: 1;
   overflow-y: auto;
-  opacity: 1;
-  transition: opacity 300ms;
-  &.drawer-open {
-    opacity: 0.2;
-  }
 }
 
 @media (hover: hover) {
