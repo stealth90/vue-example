@@ -1,9 +1,14 @@
 <script setup lang="ts">
 import BottomTabActions from "@/components/NoteView/BottomTabActions.vue";
+import CreateFolder from "@/components/NoteView/CreateFolder.vue";
 import type { Note } from "@/types";
 import { ref } from "vue";
 
 const notes = ref<Note[]>([]);
+const open = ref(false);
+const handleCreateFolder = () => {};
+const handleCloseModal = () => {open.value = false};
+const handleOpenModal = () => {open.value = true};
 </script>
 
 <template>
@@ -15,7 +20,8 @@ const notes = ref<Note[]>([]);
       :note="note"
       :index="index"
     />
-    <BottomTabActions />
+    <BottomTabActions @create-folder="handleOpenModal" />
+    <CreateFolder :open="open" @create-folder="handleCreateFolder" @close-modal="handleCloseModal" />
   </main>
 </template>
 

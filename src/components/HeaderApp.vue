@@ -6,6 +6,7 @@ import { useDisplay } from "vuetify";
 
 const { mobile } = useDisplay();
 const router = useRouter();
+const routeName = router?.currentRoute?.value?.name as string;
 
 defineEmits(["toogle-drawer"]);
 </script>
@@ -31,7 +32,7 @@ defineEmits(["toogle-drawer"]);
           height="25"
         />
         <h1>
-          {{ capitalize(router?.currentRoute?.value?.name as string) }}
+          {{ capitalize(routeName) }}
         </h1>
       </div>
     </nav>

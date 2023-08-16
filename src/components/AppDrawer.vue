@@ -1,10 +1,8 @@
 <script setup lang="ts">
-import type { UserTheme } from "@/App.vue";
+import { onUpdated,ref,capitalize } from "vue";
 import routes from "@/router/routes";
-import { onUpdated } from "vue";
 import { Icon } from "@iconify/vue";
-import { ref } from "vue";
-import { capitalize } from "vue";
+import type { UserTheme } from "@/App.vue";
 
 const props = defineProps<{ drawer: boolean }>();
 const emit = defineEmits(["close-drawer"]);
