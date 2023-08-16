@@ -1,11 +1,17 @@
 <script setup lang="ts">
-
 const props = defineProps<{ open: boolean }>();
-const emit = defineEmits(["close-modal", "create-folder"])
+const emit = defineEmits(["close-modal", "create-folder"]);
 </script>
 
 <template>
-  <v-dialog :model-value="props.open" width="auto">
+  <v-dialog
+    :model-value="props.open"
+    width="auto"
+    persistent
+    fullscreen
+    :scrim="false"
+    transition="dialog-bottom-transition"
+  >
     <v-card>
       <v-card-text>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
