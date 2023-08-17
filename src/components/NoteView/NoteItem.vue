@@ -38,6 +38,7 @@ defineProps<{ note: Note; index: number; lastItem: boolean }>();
   border-radius: 5rem;
   display: flex;
   align-items: center;
+  cursor: pointer;
 
   .note-wrapper {
     padding-left: 1rem;

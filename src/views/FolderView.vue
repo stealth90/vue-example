@@ -6,6 +6,9 @@ import type { Folder } from "@/types";
 import { readFromLocalStorage, saveToLocalStorage } from "@/utils";
 import { uid } from "uid";
 import { ref } from "vue";
+import { useDisplay } from "vuetify";
+
+const { mobile } = useDisplay();
 
 const folders = ref<Folder[]>([]);
 const open = ref(false);
@@ -36,7 +39,7 @@ const handleOpenModal = () => {
 </script>
 
 <template>
-  <main class="note-view">
+  <main class="note-view" :class="{ mobile: mobile }">
     <h1>Cartelle</h1>
     <v-text-field
       variant="solo"
@@ -74,15 +77,17 @@ h1 {
 .folders-folder-list {
   background-color: var(--color-background);
   border-radius: 1rem;
-  padding: 0.5rem 0 0.5rem 1rem
+  padding: 0.5rem 0 0.5rem 1rem;
 }
 .note-view {
   background-color: var(--color-background-soft);
   height: 100%;
   position: relative;
   padding: 0 2rem;
-  margin-bottom: 5.125rem;
   overflow-y: auto;
+  &.mobile {
+    margin-bottom: 5.125rem;
+  }
 }
 :deep(.v-field.v-field--appended) {
   background-color: var(--color-background-mute);

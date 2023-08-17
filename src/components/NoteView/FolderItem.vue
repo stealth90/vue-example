@@ -44,6 +44,7 @@ const handleGoToNotes = () => {
   border-radius: 5rem;
   display: flex;
   align-items: center;
+  cursor: pointer;
 
   .folder-wrapper {
     padding-left: 1rem;

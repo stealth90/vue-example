@@ -1,15 +1,18 @@
 <script setup lang="ts">
 import { Icon } from "@iconify/vue";
+import { useDisplay } from "vuetify";
+
+const { mobile } = useDisplay();
 
 defineEmits(["create-folder", "create-note"]);
-const props = defineProps<{
+defineProps<{
   countItem?: number;
   onlyNote?: boolean;
 }>();
 </script>
 
 <template>
-  <div class="bottom-tab-actions" :class="{ 'only-notes': onlyNote }">
+  <div class="bottom-tab-actions" :class="{ 'only-notes': onlyNote, 'mobile': mobile }">
     <div v-if="!onlyNote" class="icon-wrapper" >
       <Icon
         icon="basil:folder-plus-outline"
@@ -37,13 +40,16 @@ const props = defineProps<{
 <style scoped>
 .bottom-tab-actions {
   position: absolute;
-  bottom: 3.5rem;
+  bottom: 0;
   left: 0;
   right: 0;
   display: flex;
   justify-content: space-between;
   padding: 1rem;
   background-color: var(--color-background-soft);
+  &.mobile {
+    bottom: 3.5rem;
+  }
   &.only-notes{
     justify-content: flex-end;
   }

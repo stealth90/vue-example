@@ -6,6 +6,9 @@ import type { Note } from "@/types";
 import { readFromLocalStorage, saveToLocalStorage } from "@/utils";
 import { uid } from "uid";
 import { ref } from "vue";
+import { useDisplay } from "vuetify";
+
+const { mobile } = useDisplay();
 
 const notes = ref<Note[]>([]);
 const open = ref(false);
@@ -36,7 +39,7 @@ const handleOpenModal = () => {
 </script>
 
 <template>
-  <main class="note-view">
+  <main class="note-view" :class="{'mobile': mobile}">
     <h1>Note</h1>
     <v-text-field
       variant="solo"
@@ -81,8 +84,11 @@ h1 {
   height: 100%;
   position: relative;
   padding: 0 2rem;
-  margin-bottom: 5.125rem;
+  margin-bottom: 0;
   overflow-y: auto;
+  &.mobile {
+    margin-bottom: 5.125rem;
+  }
 }
 :deep(.v-field.v-field--appended) {
   background-color: var(--color-background-mute);
