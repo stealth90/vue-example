@@ -102,7 +102,7 @@ onUpdated(() => {
 }
 
 .drawer-overlay {
-  transform: translateX(-150%);
+  transform: translateX(-200vw);
   width: 100vw;
   background-color: rgba(0, 0, 0, 0);
   flex: 1;
