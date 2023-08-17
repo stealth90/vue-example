@@ -2,11 +2,15 @@
 import { Icon } from "@iconify/vue";
 
 defineEmits(["create-folder", "create-note"]);
+const props = defineProps<{
+  countItem?: number;
+  onlyNote?: boolean;
+}>();
 </script>
 
 <template>
-  <div class="bottom-tab-actions">
-    <div class="icon-wrapper">
+  <div class="bottom-tab-actions" :class="{ 'only-notes': onlyNote }">
+    <div v-if="!onlyNote" class="icon-wrapper" >
       <Icon
         icon="basil:folder-plus-outline"
         color="orange"
@@ -24,18 +28,25 @@ defineEmits(["create-folder", "create-note"]);
         @click="$emit('create-note')"
       />
     </div>
+    <p class="notes-count" v-if="onlyNote">
+      {{ countItem }} {{ countItem === 1 ? "nota" : "note" }}
+    </p>
   </div>
 </template>
 
 <style scoped>
 .bottom-tab-actions {
   position: absolute;
-  bottom: 0;
+  bottom: 3.5rem;
   left: 0;
   right: 0;
   display: flex;
   justify-content: space-between;
-  padding: 1rem 2rem;
+  padding: 1rem;
+  background-color: var(--color-background-soft);
+  &.only-notes{
+    justify-content: flex-end;
+  }
 }
 
 .icon-wrapper {
@@ -50,5 +61,13 @@ defineEmits(["create-folder", "create-note"]);
   &:hover {
     background-color: #ffa500aa;
   }
+}
+
+.notes-count {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 12px;
 }
 </style>

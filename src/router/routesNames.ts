@@ -1,12 +1,14 @@
 export interface IRoutesNames {
   HOME: string;
-  NOTE: string;
+  NOTES: string;
+  FOLDERS: string;
   TODO_LIST: string;
 }
 
 const routesNames: Readonly<IRoutesNames> = {
   HOME: "home",
-  NOTE: "note",
+  NOTES: "notes",
+  FOLDERS: "folders",
   TODO_LIST: "todo",
 };
 

@@ -1,28 +1,28 @@
 <script setup lang="ts">
 import BottomTabActions from "@/components/NoteView/BottomTabActions.vue";
 import CreateFolder from "@/components/NoteView/CreateFolder.vue";
-import NoteItem from "@/components/NoteView/NoteItem.vue";
-import type { Note } from "@/types";
+import FolderItem from "@/components/NoteView/FolderItem.vue";
+import type { Folder } from "@/types";
 import { readFromLocalStorage, saveToLocalStorage } from "@/utils";
 import { uid } from "uid";
 import { ref } from "vue";
 
-const notes = ref<Note[]>([]);
+const folders = ref<Folder[]>([]);
 const open = ref(false);
 
 const fetchNotesList = () => {
-  notes.value = readFromLocalStorage<Note[]>("notes") || [];
+  folders.value = readFromLocalStorage<Folder[]>("folders") || [];
 };
 
 fetchNotesList();
 
 const setNotesToLocalStorage = () => {
-  saveToLocalStorage("notes", notes?.value);
+  saveToLocalStorage("folders", folders?.value);
 };
 
 const handleCreateFolder = (folderName: string) => {
   handleCloseModal();
-  notes?.value?.push({ id: uid(), name: folderName });
+  folders?.value?.push({ id: uid(), name: folderName });
   setNotesToLocalStorage();
 };
 
@@ -37,7 +37,7 @@ const handleOpenModal = () => {
 
 <template>
   <main class="note-view">
-    <h1>Note</h1>
+    <h1>Cartelle</h1>
     <v-text-field
       variant="solo"
       density="compact"
@@ -47,12 +47,12 @@ const handleOpenModal = () => {
       label="Cerca"
       prepend-inner-icon="mdi-magnify"
     ></v-text-field>
-    <div v-if="notes.length" class="notes-folder-list">
-      <NoteItem
-        v-for="(note, index) in notes"
-        :key="note.id"
-        :note="note"
-        :lastItem="index === notes.length - 1"
+    <div class="folders-folder-list">
+      <FolderItem
+        v-for="(folder, index) in folders"
+        :key="folder.id"
+        :folder="folder"
+        :lastItem="index === folders.length - 1"
         :index="index"
       />
     </div>
@@ -62,7 +62,7 @@ const handleOpenModal = () => {
       @close-modal="handleCloseModal"
     />
   </main>
-  <BottomTabActions :countItem="notes.length" :onlyNote="true" @create-folder="handleOpenModal" />
+  <BottomTabActions @create-folder="handleOpenModal" />
 </template>
 
 <style scoped>
@@ -71,7 +71,7 @@ h1 {
   top: 0;
   background-color: inherit;
 }
-.notes-folder-list {
+.folders-folder-list {
   background-color: var(--color-background);
   border-radius: 1rem;
   padding: 0.5rem 0 0.5rem 1rem

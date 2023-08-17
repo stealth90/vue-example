@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Todo } from "@/types";
 import { Icon } from "@iconify/vue";
-const props = defineProps<{ todo: Todo; index: number }>();
+defineProps<{ todo: Todo; index: number }>();
 
 defineEmits(["edit-todo", "update-todo", "toggle-complete", "delete-todo"]);
 </script>

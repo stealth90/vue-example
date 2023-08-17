@@ -1,20 +1,26 @@
 <script setup lang="ts">
-import type { Note } from "@/types";
+import router from "@/router";
+import type { Folder } from "@/types";
 import { Icon } from "@iconify/vue";
-defineProps<{ note: Note; index: number; lastItem: boolean }>();
+const props = defineProps<{ folder: Folder; index: number; lastItem: boolean }>();
+
+const handleGoToNotes = () => {
+  router.push({path: `/folders/${props.folder.name}/notes`})
+}
+
 </script>
 
 <template>
-  <div class="note-item">
+  <div class="folder-item" @click="handleGoToNotes">
     <Icon
       icon="ion:folder-outline"
       color="orange"
-      class="icon create-note"
+      class="icon create-folder"
       width="24"
     />
-    <div class="note-wrapper">
-      <p class="note-name">{{ note.name }}</p>
-      <div class="note-counter-wrapper">
+    <div class="folder-wrapper">
+      <p class="folder-name">{{ folder.name }}</p>
+      <div class="folder-counter-wrapper">
         <p>0</p>
         <Icon
           icon="iconamoon:arrow-right-2-thin"
@@ -29,23 +35,23 @@ defineProps<{ note: Note; index: number; lastItem: boolean }>();
 
 <style lang="scss" scoped>
 
-.note-name{
+.folder-name{
   font-weight: 500;
 }
-.note-item {
+.folder-item {
   background-color: var(--color-background);
   padding: 0.5rem 0;
   border-radius: 5rem;
   display: flex;
   align-items: center;
 
-  .note-wrapper {
+  .folder-wrapper {
     padding-left: 1rem;
     flex: 1;
     position: relative;
     display: flex;
     justify-content: space-between;
-    .note-counter-wrapper{
+    .folder-counter-wrapper{
       display: flex;
       align-items: center;
       color: gray;

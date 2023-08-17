@@ -1,6 +1,26 @@
 <script setup lang="ts">
+import { ref } from 'vue';
+
 const props = defineProps<{ open: boolean }>();
 const emit = defineEmits(["close-modal", "create-folder"]);
+
+const newFolderName = ref("Nuova cartella");
+const errorMessage = ref("");
+
+const handleCreateFolder = () => {
+  if(newFolderName.value){
+    emit('create-folder',newFolderName.value)
+  }else{
+    errorMessage.value = "Inserisci un nome valido"
+  }
+}
+
+const handleErrorMessage = () => {
+  if(newFolderName.value){
+    errorMessage.value = "";
+  }
+}
+
 </script>
 
 <template>
@@ -17,11 +37,20 @@ const emit = defineEmits(["close-modal", "create-folder"]);
           Annulla
         </v-btn>
         <v-toolbar-title>Nuova cartella</v-toolbar-title>
-        <v-btn variant="text" @click="emit('create-folder')">Fine</v-btn>
+        <v-btn variant="text" @click="handleCreateFolder">Fine</v-btn>
       </v-toolbar>
       <v-card-text>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua.
+        <v-text-field
+          density="compact"
+          single-line
+          hide-details
+          clearable
+          v-model="newFolderName"
+          placeholder="Nuova cartella"
+          variant="outlined"
+          @update:model-value="handleErrorMessage"
+          :error-messages="errorMessage"
+        ></v-text-field>
       </v-card-text>
     </v-card>
   </v-dialog>
@@ -37,7 +66,7 @@ const emit = defineEmits(["close-modal", "create-folder"]);
     margin: 0;
   }
 }
-.v-toolbar::v-deep .v-toolbar__content {
+:deep(.v-toolbar__content) {
   justify-content: space-between;
 }
 .v-toolbar-title {

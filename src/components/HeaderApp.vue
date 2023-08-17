@@ -1,14 +1,23 @@
 <script setup lang="ts">
-import { useRouter } from "vue-router";
-import { capitalize } from "@/utils";
 import { Icon } from "@iconify/vue";
 import { useDisplay } from "vuetify";
-
-const { mobile } = useDisplay();
-const router = useRouter();
-const routeName = router?.currentRoute?.value?.name as string;
+import router from "@/router";
+import { onBeforeUpdate } from "vue";
 
 defineEmits(["toogle-drawer"]);
+
+const { mobile } = useDisplay();
+const routeName = router?.currentRoute?.value?.name?.toString() || "";
+
+const isFirstRouteLevel = (): boolean => {
+  console.log({routeName})
+  return ["home", "folders"].includes(routeName);
+};
+
+onBeforeUpdate(()=> {
+  console.log('update')
+})
+
 </script>
 
 <template>
@@ -25,15 +34,19 @@ defineEmits(["toogle-drawer"]);
       </div>
       <div class="branding">
         <img
+          v-if="isFirstRouteLevel()"
           alt="Vue logo"
           class="logo"
           src="@/assets/logo.svg"
           width="25"
           height="25"
         />
-        <h1>
-          {{ capitalize(routeName) }}
-        </h1>
+        <v-btn v-else variant="text" @click="router.back()">
+          <template v-slot:prepend>
+            <Icon icon="iconamoon:arrow-left-2-light" width="24" color="orange"></Icon>
+          </template>
+          Indietro
+        </v-btn>
       </div>
     </nav>
   </header>
@@ -63,8 +76,9 @@ header {
         max-width: 50px;
       }
 
-      h1 {
-        font-size: 24px;
+      .v-btn {
+        padding: 0;
+        text-transform: capitalize;
       }
     }
 

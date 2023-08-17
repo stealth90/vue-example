@@ -23,3 +23,14 @@ export type NewNote = {
   isValid: boolean;
   error: string;
 };
+
+export type Folder = {
+  id: string;
+  name: string;
+};
+
+export type NewFolder = {
+  name: string;
+  isValid: boolean;
+  error: string;
+};

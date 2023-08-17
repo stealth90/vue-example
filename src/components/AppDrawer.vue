@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onUpdated,ref,capitalize } from "vue";
-import routes from "@/router/routes";
+import { bottomRoutes } from "@/router/routes";
 import { Icon } from "@iconify/vue";
 import type { UserTheme } from "@/App.vue";
 
@@ -54,7 +54,7 @@ onUpdated(() => {
 
         <v-list density="compact" nav class="navigation-list">
           <v-list-item
-            v-for="route in routes"
+            v-for="route in bottomRoutes"
             :to="route.path"
             :key="route.name"
             :title="capitalize(route.name)"

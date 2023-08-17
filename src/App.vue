@@ -41,7 +41,7 @@ onMounted(() => {
 
 <template>
   <div class="app">
-    <HeaderApp @toogle-drawer="handleToogleDrawer" />
+    <HeaderApp @toogle-drawer="handleToogleDrawer" :key="($route.name as string)" />
     <AppDrawer @close-drawer="handleToogleDrawer" :drawer="drawer" />
     <RouterView />
     <BottomBar />

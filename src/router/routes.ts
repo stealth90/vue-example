@@ -12,17 +12,41 @@ interface AppRoutes {
 const routes: AppRoutes = [
   {
     path: "/",
+    name: RoutesNames.HOME,
+    icon: "ri:todo-line",
+    activeIcon: "ri:todo-fill",
+    component: TodoListView,
+  },
+  {
+    path: "/folders",
+    name: RoutesNames.FOLDERS,
+    icon: "mdi-heart",
+    activeIcon: "mdi-heart-outline",
+    component: () => import("@/views/FolderView.vue"),
+  },
+  {
+    path: "/folders/:folder/notes",
+    name: RoutesNames.NOTES,
+    icon: "mdi-heart",
+    activeIcon: "mdi-heart-outline",
+    component: () => import("@/views/NoteView.vue"),
+  },
+];
+
+export const bottomRoutes: AppRoutes = [
+  {
+    path: "/",
     name: RoutesNames.TODO_LIST,
     icon: "ri:todo-line",
     activeIcon: "ri:todo-fill",
     component: TodoListView,
   },
   {
-    path: "/note",
-    name: RoutesNames.NOTE,
+    path: "/folders",
+    name: RoutesNames.FOLDERS,
     icon: "mdi-heart",
     activeIcon: "mdi-heart-outline",
-    component: () => import("@/views/NoteView.vue"),
+    component: () => import("@/views/FolderView.vue"),
   },
 ];
 

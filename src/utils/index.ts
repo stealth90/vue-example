@@ -49,4 +49,16 @@ export const generateRandomColor = (): {
   return { backgroundColor, color };
 };
 
+export const saveToLocalStorage = <T extends any>(key:string, value: T) => {
+  localStorage.setItem(key, JSON.stringify(value));
+};
+
+export const readFromLocalStorage = <T extends any>(key:string): T | null => {
+  const data = localStorage.getItem(key);
+  if(data){
+    return JSON.parse(data)
+  }
+  return null
+};
+
 export default { capitalize, generateRandomColor };

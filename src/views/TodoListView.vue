@@ -4,7 +4,7 @@ import type { Todo } from "@/types";
 import { ref } from "vue";
 import { uid } from "uid";
 import TodoItem from "@/components/TodoItem.vue";
-import { generateRandomColor } from "@/utils";
+import { generateRandomColor, readFromLocalStorage, saveToLocalStorage } from "@/utils";
 
 const todos = ref<Todo[]>([]);
 
@@ -16,22 +16,17 @@ const handleCreateTodo = (newTodo: string) => {
     name: newTodo,
     ...generateRandomColor(),
   });
-  setTodoListLocalStorage()
+  setTodoListLocalStorage();
 };
 
 const fetchTodoList = () => {
-  if (localStorage.getItem("todoList")) {
-    const savedTodoList = JSON.parse(
-      localStorage.getItem("todoList") as string
-    );
-    todos.value = savedTodoList;
-  }
+  todos.value = readFromLocalStorage<Todo[]>("todoList") || [];
 };
 
 fetchTodoList();
 
 const setTodoListLocalStorage = () => {
-  localStorage.setItem("todoList", JSON.stringify(todos.value));
+  saveToLocalStorage("todoList", todos.value);
 };
 
 const toggleEditTodo = (todoPos: number) => {
