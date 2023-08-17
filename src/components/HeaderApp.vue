@@ -66,7 +66,7 @@ header {
   nav {
     display: flex;
     align-items: center;
-    padding: 25px 16px;
+    padding: 1rem;
 
     .branding {
       display: flex;
