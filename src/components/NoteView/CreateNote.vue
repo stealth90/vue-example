@@ -1,25 +1,25 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-
+import { ref } from "vue";
+import BottomNoteActions from "@/components/NoteView/BottomNoteActions.vue";
 const props = defineProps<{ open: boolean }>();
 const emit = defineEmits(["close-modal", "create-note"]);
 
-const newNoteName = ref("Nuova cartella");
+const newNote = ref("");
 const errorMessage = ref("");
+const createdDate = ref(
+  new Intl.DateTimeFormat("it-IT", {
+    dateStyle: "long",
+    timeStyle: "short",
+  }).format()
+);
 
 const handleCreateNote = () => {
-  if(newNoteName.value){
-    emit('create-note',newNoteName.value)
-  }else{
-    errorMessage.value = "Inserisci un nome valido"
+  if (newNote.value) {
+    emit("create-note", newNote.value);
+  } else {
+    errorMessage.value = "Inserisci un nome valido";
   }
-}
-
-const handleErrorMessage = () => {
-  if(newNoteName.value){
-    errorMessage.value = "";
-  }
-}
+};
 
 </script>
 
@@ -33,41 +33,69 @@ const handleErrorMessage = () => {
   >
     <v-card>
       <v-toolbar>
-        <v-btn variant="text" class="close-icon" @click="emit('close-modal')">
+        <v-btn
+          variant="text"
+          color="orange"
+          class="close-icon"
+          @click="emit('close-modal')"
+        >
           Annulla
         </v-btn>
-        <v-toolbar-title>Nuova cartella</v-toolbar-title>
-        <v-btn variant="text" @click="handleCreateNote">Fine</v-btn>
+        <v-toolbar-title>Nuova nota</v-toolbar-title>
+        <v-btn :disabled="!newNote.length" variant="text" color="orange" @click="handleCreateNote"
+          >Salva</v-btn
+        >
+      </v-toolbar>
+      <v-toolbar>
+        <v-toolbar-title class="note-date">{{ createdDate }}</v-toolbar-title>
       </v-toolbar>
       <v-card-text>
-        <v-text-field
-          density="compact"
-          single-line
-          hide-details
-          clearable
-          v-model="newNoteName"
-          placeholder="Nuova cartella"
+        <v-textarea
+          row-height="100"
+          label=""
+          no-resize
           variant="outlined"
-          @update:model-value="handleErrorMessage"
-          :error-messages="errorMessage"
-        ></v-text-field>
+          hide-details
+          v-model="newNote"
+        ></v-textarea>
       </v-card-text>
+      <v-card-actions>
+        <BottomNoteActions />
+      </v-card-actions>
     </v-card>
   </v-dialog>
 </template>
 
 <style scoped>
 .v-toolbar {
-  background-color: var(--color-background-mute);
-
+  background-color: var(--color-background);
   .v-btn {
-    font-size: 12px;
+    font-size: 14px;
     text-transform: capitalize;
     margin: 0;
+  }
+  &:nth-of-type(2):deep(.v-toolbar__content) {
+    height: 2rem !important;
   }
 }
 :deep(.v-toolbar__content) {
   justify-content: space-between;
+}
+
+.v-card-text {
+  display: flex;
+  margin-bottom: 1rem;
+  .v-input--horizontal {
+    display: flex;
+  }
+}
+:deep(.v-input__control) {
+  flex: 1;
+}
+
+.note-date {
+  font-size: 12px;
+  color: var(--color-border-hover);
 }
 .v-toolbar-title {
   position: absolute;

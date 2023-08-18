@@ -1,22 +1,23 @@
 <script setup lang="ts">
-import BottomTabActions from "@/components/NoteView/BottomTabActions.vue";
+import BottomTabActions from "@/components/BottomTabActions.vue";
 import CreateNote from "@/components/NoteView/CreateNote.vue";
 import NoteItem from "@/components/NoteView/NoteItem.vue";
-import router from "@/router";
 import type { Folder, Note } from "@/types";
 import { readFromLocalStorage, saveToLocalStorage } from "@/utils";
 import { uid } from "uid";
 import { ref } from "vue";
+import { useRoute } from "vue-router";
 import { useDisplay } from "vuetify";
 
 const { mobile } = useDisplay();
+const route = useRoute();
 
 const notes = ref<Note[]>([]);
 const open = ref(false);
 
 const fetchNotesList = () => {
   const allFolders = readFromLocalStorage<Folder[]>("folders") || [];
-  notes.value = allFolders?.find(folder => folder.name === '' )?.notes || [];
+  notes.value = allFolders?.find(folder => folder.name === route.params.folder )?.notes || [];
 };
 
 fetchNotesList();

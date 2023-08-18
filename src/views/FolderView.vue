@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import BottomTabActions from "@/components/NoteView/BottomTabActions.vue";
-import CreateFolder from "@/components/NoteView/CreateFolder.vue";
-import FolderItem from "@/components/NoteView/FolderItem.vue";
+import BottomTabActions from "@/components/BottomTabActions.vue";
+import CreateFolder from "@/components/FolderView/CreateFolder.vue";
+import CreateNote from "@/components/NoteView/CreateNote.vue";
+import FolderItem from "@/components/FolderView/FolderItem.vue";
 import type { Folder } from "@/types";
 import { readFromLocalStorage, saveToLocalStorage } from "@/utils";
 import { uid } from "uid";
@@ -11,7 +12,8 @@ import { useDisplay } from "vuetify";
 const { mobile } = useDisplay();
 
 const folders = ref<Folder[]>([]);
-const open = ref(false);
+const openCreateFolderModal = ref(false);
+const openCreateNoteModal = ref(false);
 
 const fetchNotesList = () => {
   folders.value = readFromLocalStorage<Folder[]>("folders") || [];
@@ -24,18 +26,33 @@ const setNotesToLocalStorage = () => {
 };
 
 const handleCreateFolder = (folderName: string) => {
-  handleCloseModal();
+  handleCloseCreateFolderModal();
   folders?.value?.push({ id: uid(), name: folderName, notes: [] });
   setNotesToLocalStorage();
 };
 
-const handleCloseModal = () => {
-  open.value = false;
+const handleCreateNote = (folderName: string) => {
+  handleCloseCreateFolderModal();
+  folders?.value?.push({ id: uid(), name: folderName, notes: [] });
+  setNotesToLocalStorage();
 };
 
-const handleOpenModal = () => {
-  open.value = true;
+const handleCloseCreateFolderModal = () => {
+  openCreateFolderModal.value = false;
 };
+
+const handleCloseCreateNoteModal = () => {
+  openCreateFolderModal.value = false;
+};
+
+const handleOpenCreateFolderModal = () => {
+  openCreateFolderModal.value = true;
+};
+
+const handleOpenCreateNoteModal = () => {
+  openCreateNoteModal.value = true;
+};
+
 </script>
 
 <template>
@@ -60,12 +77,17 @@ const handleOpenModal = () => {
       />
     </div>
     <CreateFolder
-      :open="open"
+      :open="openCreateFolderModal"
       @create-folder="handleCreateFolder"
-      @close-modal="handleCloseModal"
+      @close-modal="handleCloseCreateFolderModal"
+    />
+    <CreateNote
+      :open="openCreateNoteModal"
+      @create-note="handleCreateNote"
+      @close-modal="handleCloseCreateNoteModal"
     />
   </main>
-  <BottomTabActions @create-folder="handleOpenModal" />
+  <BottomTabActions @create-folder="handleOpenCreateFolderModal" @create-note="handleOpenCreateNoteModal" />
 </template>
 
 <style scoped>
