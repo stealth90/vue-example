@@ -2,7 +2,6 @@
 import { Icon } from "@iconify/vue";
 import { useDisplay } from "vuetify";
 import router from "@/router";
-import { onBeforeUpdate } from "vue";
 
 defineEmits(["toogle-drawer"]);
 
@@ -10,13 +9,8 @@ const { mobile } = useDisplay();
 const routeName = router?.currentRoute?.value?.name?.toString() || "";
 
 const isFirstRouteLevel = (): boolean => {
-  console.log({routeName})
   return ["home", "folders"].includes(routeName);
 };
-
-onBeforeUpdate(()=> {
-  console.log('update')
-})
 
 </script>
 
@@ -79,6 +73,7 @@ header {
       .v-btn {
         padding: 0;
         text-transform: capitalize;
+        color: orange;
       }
     }
 

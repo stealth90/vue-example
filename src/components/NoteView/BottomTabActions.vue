@@ -31,8 +31,11 @@ defineProps<{
         @click="$emit('create-note')"
       />
     </div>
-    <p class="notes-count" v-if="onlyNote">
+    <p class="notes-count" v-if="onlyNote && countItem && countItem >= 1">
       {{ countItem }} {{ countItem === 1 ? "nota" : "note" }}
+    </p>
+    <p class="notes-count" v-else-if="onlyNote">
+      Nessuna nota
     </p>
   </div>
 </template>

@@ -25,7 +25,7 @@ const setNotesToLocalStorage = () => {
 
 const handleCreateFolder = (folderName: string) => {
   handleCloseModal();
-  folders?.value?.push({ id: uid(), name: folderName });
+  folders?.value?.push({ id: uid(), name: folderName, notes: [] });
   setNotesToLocalStorage();
 };
 

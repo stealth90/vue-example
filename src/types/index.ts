@@ -27,6 +27,7 @@ export type NewNote = {
 export type Folder = {
   id: string;
   name: string;
+  notes: Note[];
 };
 
 export type NewFolder = {

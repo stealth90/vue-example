@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import BottomTabActions from "@/components/NoteView/BottomTabActions.vue";
-import CreateFolder from "@/components/NoteView/CreateFolder.vue";
+import CreateNote from "@/components/NoteView/CreateNote.vue";
 import NoteItem from "@/components/NoteView/NoteItem.vue";
-import type { Note } from "@/types";
+import router from "@/router";
+import type { Folder, Note } from "@/types";
 import { readFromLocalStorage, saveToLocalStorage } from "@/utils";
 import { uid } from "uid";
 import { ref } from "vue";
@@ -14,7 +15,8 @@ const notes = ref<Note[]>([]);
 const open = ref(false);
 
 const fetchNotesList = () => {
-  notes.value = readFromLocalStorage<Note[]>("notes") || [];
+  const allFolders = readFromLocalStorage<Folder[]>("folders") || [];
+  notes.value = allFolders?.find(folder => folder.name === '' )?.notes || [];
 };
 
 fetchNotesList();
@@ -23,7 +25,7 @@ const setNotesToLocalStorage = () => {
   saveToLocalStorage("notes", notes?.value);
 };
 
-const handleCreateFolder = (folderName: string) => {
+const handleCreateNote = (folderName: string) => {
   handleCloseModal();
   notes?.value?.push({ id: uid(), name: folderName });
   setNotesToLocalStorage();
@@ -59,13 +61,13 @@ const handleOpenModal = () => {
         :index="index"
       />
     </div>
-    <CreateFolder
+    <CreateNote
       :open="open"
-      @create-folder="handleCreateFolder"
+      @create-note="handleCreateNote"
       @close-modal="handleCloseModal"
     />
   </main>
-  <BottomTabActions :countItem="notes.length" :onlyNote="true" @create-folder="handleOpenModal" />
+  <BottomTabActions :countItem="notes.length" :onlyNote="true" @create-note="handleOpenModal" />
 </template>
 
 <style scoped>

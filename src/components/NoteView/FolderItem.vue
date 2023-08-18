@@ -5,7 +5,7 @@ import { Icon } from "@iconify/vue";
 const props = defineProps<{ folder: Folder; index: number; lastItem: boolean }>();
 
 const handleGoToNotes = () => {
-  router.push({path: `/folders/${props.folder.name}/notes`})
+  router.push({path: `/folders/${props.folder.name}`})
 }
 
 </script>

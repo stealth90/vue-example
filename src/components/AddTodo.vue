@@ -28,7 +28,6 @@ const createTodo = () => {
 };
 
 const checkValidity = (e: Event) => {
-  console.log({ e });
   if (newTodoState.isSubmitted) {
     if ((e.currentTarget as HTMLInputElement).value) {
       newTodoState.isValid = true;

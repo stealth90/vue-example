@@ -25,7 +25,7 @@ const routes: AppRoutes = [
     component: () => import("@/views/FolderView.vue"),
   },
   {
-    path: "/folders/:folder/notes",
+    path: "/folders/:folder",
     name: RoutesNames.NOTES,
     icon: "mdi-heart",
     activeIcon: "mdi-heart-outline",
