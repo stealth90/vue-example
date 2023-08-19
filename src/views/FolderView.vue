@@ -6,20 +6,29 @@ import FolderItem from "@/components/FolderView/FolderItem.vue";
 import type { Folder } from "@/types";
 import { readFromLocalStorage, saveToLocalStorage } from "@/utils";
 import { uid } from "uid";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { useDisplay } from "vuetify";
+import NoItemsPlaceholder from "@/components/NoItemsPlaceholder.vue";
 
 const { mobile } = useDisplay();
 
 const folders = ref<Folder[]>([]);
 const openCreateFolderModal = ref(false);
 const openCreateNoteModal = ref(false);
+const searchValue = ref<string>();
 
 const fetchNotesList = () => {
   folders.value = readFromLocalStorage<Folder[]>("folders") || [];
 };
 
 fetchNotesList();
+
+
+const notesFiltered = computed(() => {
+  return folders.value.filter((folder) =>
+    folder.name.includes(searchValue.value || "")
+  );
+});
 
 const setNotesToLocalStorage = () => {
   saveToLocalStorage("folders", folders?.value);
@@ -66,15 +75,18 @@ const handleOpenCreateNoteModal = () => {
       clearable
       label="Cerca"
       prepend-inner-icon="mdi-magnify"
+      v-model="searchValue"
     ></v-text-field>
     <div class="folders-folder-list">
       <FolderItem
-        v-for="(folder, index) in folders"
+        v-for="(folder, index) in notesFiltered"
+        v-if="notesFiltered.length"
         :key="folder.id"
         :folder="folder"
-        :lastItem="index === folders.length - 1"
+        :lastItem="index === notesFiltered.length - 1"
         :index="index"
       />
+      <NoItemsPlaceholder v-else />
     </div>
     <CreateFolder
       :open="openCreateFolderModal"

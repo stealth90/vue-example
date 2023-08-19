@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import BottomTabActions from "@/components/BottomTabActions.vue";
+import NoItemsPlaceholder from "@/components/NoItemsPlaceholder.vue";
 import CreateNote from "@/components/NoteView/CreateNote.vue";
 import NoteItem from "@/components/NoteView/NoteItem.vue";
 import type { Folder, Note } from "@/types";
 import { readFromLocalStorage, saveToLocalStorage } from "@/utils";
+import { computed } from "vue";
 import { ref } from "vue";
 import { useRoute } from "vue-router";
 import { useDisplay } from "vuetify";
@@ -11,10 +13,17 @@ import { useDisplay } from "vuetify";
 const { mobile } = useDisplay();
 const route = useRoute();
 
+const searchValue = ref<string>();
 const notes = ref<Note[]>([]);
 const editNote = ref<Note>();
 const editNotePos = ref<number>();
 const open = ref(false);
+
+const notesFiltered = computed(() => {
+  return notes.value.filter((note) =>
+    note.content.includes(searchValue.value || "")
+  );
+});
 
 const fetchNotesList = () => {
   const allFolders = readFromLocalStorage<Folder[]>("folders") || [];
@@ -54,7 +63,7 @@ const handleEditNote = (noteToEdit: Note) => {
 const handleCloseModal = () => {
   open.value = false;
   editNote.value = undefined;
-  editNotePos.value = undefined
+  editNotePos.value = undefined;
 };
 
 const handleOpenModal = () => {
@@ -66,7 +75,6 @@ const handleOnEditNote = (noteID: number) => {
   editNotePos.value = noteID;
   handleOpenModal();
 };
-
 </script>
 
 <template>
@@ -80,15 +88,18 @@ const handleOnEditNote = (noteID: number) => {
       clearable
       label="Cerca"
       prepend-inner-icon="mdi-magnify"
+      v-model="searchValue"
     ></v-text-field>
-    <div v-if="notes.length" class="notes-folder-list">
+    <div class="notes-folder-list">
       <NoteItem
-        v-for="(note, index) in notes"
+        v-for="(note, index) in notesFiltered"
+        v-if="notesFiltered.length"
         :key="note.id"
         :note="note"
-        :lastItem="index === notes.length - 1"
+        :lastItem="index === notesFiltered.length - 1"
         @open-edit-mode="() => handleOnEditNote(index)"
       />
+      <NoItemsPlaceholder v-else />
     </div>
     <CreateNote
       v-if="open"
