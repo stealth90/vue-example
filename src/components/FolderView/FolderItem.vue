@@ -2,12 +2,15 @@
 import router from "@/router";
 import type { Folder } from "@/types";
 import { Icon } from "@iconify/vue";
-const props = defineProps<{ folder: Folder; index: number; lastItem: boolean }>();
+const props = defineProps<{
+  folder: Folder;
+  index: number;
+  lastItem: boolean;
+}>();
 
 const handleGoToNotes = () => {
-  router.push({path: `/folders/${props.folder.name}`})
-}
-
+  router.push({ path: `/folders/${props.folder.name}` });
+};
 </script>
 
 <template>
@@ -21,7 +24,7 @@ const handleGoToNotes = () => {
     <div class="folder-wrapper">
       <p class="folder-name">{{ folder.name }}</p>
       <div class="folder-counter-wrapper">
-        <p>0</p>
+        <p>{{ folder.notes.length }}</p>
         <Icon
           icon="iconamoon:arrow-right-2-thin"
           class="counter-icon"
@@ -34,8 +37,7 @@ const handleGoToNotes = () => {
 </template>
 
 <style lang="scss" scoped>
-
-.folder-name{
+.folder-name {
   font-weight: 500;
 }
 .folder-item {
@@ -52,7 +54,7 @@ const handleGoToNotes = () => {
     position: relative;
     display: flex;
     justify-content: space-between;
-    .folder-counter-wrapper{
+    .folder-counter-wrapper {
       display: flex;
       align-items: center;
       color: gray;

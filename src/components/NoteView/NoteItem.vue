@@ -1,57 +1,42 @@
 <script setup lang="ts">
 import type { Note } from "@/types";
-import { Icon } from "@iconify/vue";
-defineProps<{ note: Note; index: number; lastItem: boolean }>();
+defineProps<{ note: Note; lastItem: boolean }>();
+defineEmits(["open-edit-mode"]);
+
 </script>
 
 <template>
-  <div class="note-item">
-    <Icon
-      icon="ion:folder-outline"
-      color="orange"
-      class="icon create-note"
-      width="24"
-    />
-    <div class="note-wrapper">
-      <p class="note-name">{{ note.name }}</p>
-      <div class="note-counter-wrapper">
-        <p>0</p>
-        <Icon
-          icon="iconamoon:arrow-right-2-thin"
-          class="counter-icon"
-          width="22"
-        />
-      </div>
+  <div class="note-item" @click="$emit('open-edit-mode')">
+    <p class="note-title">{{ note.content }}</p>
+    <div class="note-details">
+      <p>{{ note.createdAt }}</p>
     </div>
   </div>
   <hr v-if="!lastItem" />
 </template>
 
 <style lang="scss" scoped>
-
-.note-name{
-  font-weight: 500;
-}
 .note-item {
   background-color: var(--color-background);
   padding: 0.5rem 0;
   border-radius: 5rem;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   cursor: pointer;
+  padding-left: 1rem;
 
-  .note-wrapper {
-    padding-left: 1rem;
+  .note-title {
+    font-weight: 600;
+    font-size: 1rem;
+  }
+
+  .note-details {
     flex: 1;
     position: relative;
     display: flex;
     justify-content: space-between;
-    .note-counter-wrapper{
-      display: flex;
-      align-items: center;
-      color: gray;
-      margin-right: 0.5rem;
-    }
+    font-size: 0.75rem;
+    color: var(--color-border-hover);
   }
 }
 hr {

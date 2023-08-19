@@ -4,7 +4,6 @@ import CreateNote from "@/components/NoteView/CreateNote.vue";
 import NoteItem from "@/components/NoteView/NoteItem.vue";
 import type { Folder, Note } from "@/types";
 import { readFromLocalStorage, saveToLocalStorage } from "@/utils";
-import { uid } from "uid";
 import { ref } from "vue";
 import { useRoute } from "vue-router";
 import { useDisplay } from "vuetify";
@@ -13,36 +12,65 @@ const { mobile } = useDisplay();
 const route = useRoute();
 
 const notes = ref<Note[]>([]);
+const editNote = ref<Note>();
+const editNotePos = ref<number>();
 const open = ref(false);
 
 const fetchNotesList = () => {
   const allFolders = readFromLocalStorage<Folder[]>("folders") || [];
-  notes.value = allFolders?.find(folder => folder.name === route.params.folder )?.notes || [];
+  notes.value =
+    allFolders?.find((folder) => folder.name === route.params.folder)?.notes ||
+    [];
 };
 
 fetchNotesList();
 
 const setNotesToLocalStorage = () => {
-  saveToLocalStorage("notes", notes?.value);
+  const allFolders = readFromLocalStorage<Folder[]>("folders") || [];
+  const newFolders = allFolders.map((folder) => {
+    if (folder.name === route.params.folder) {
+      return {
+        ...folder,
+        notes: notes.value,
+      };
+    }
+    return folder;
+  });
+  saveToLocalStorage("folders", newFolders);
 };
 
-const handleCreateNote = (folderName: string) => {
+const handleCreateNote = (note: Note) => {
+  notes?.value?.push(note);
   handleCloseModal();
-  notes?.value?.push({ id: uid(), name: folderName });
+  setNotesToLocalStorage();
+};
+
+const handleEditNote = (noteToEdit: Note) => {
+  notes.value[editNotePos.value!] = noteToEdit;
+  handleCloseModal();
   setNotesToLocalStorage();
 };
 
 const handleCloseModal = () => {
   open.value = false;
+  editNote.value = undefined;
+  editNotePos.value = undefined
 };
 
 const handleOpenModal = () => {
   open.value = true;
 };
+
+const handleOnEditNote = (noteID: number) => {
+  editNote.value = notes.value[noteID];
+  editNotePos.value = noteID;
+  handleOpenModal();
+};
+
 </script>
 
 <template>
-  <main class="note-view" :class="{'mobile': mobile}">
+  <main class="note-view" :class="{ mobile: mobile }">
     <h1>Note</h1>
     <v-text-field
       variant="solo"
@@ -59,16 +87,23 @@ const handleOpenModal = () => {
         :key="note.id"
         :note="note"
         :lastItem="index === notes.length - 1"
-        :index="index"
+        @open-edit-mode="() => handleOnEditNote(index)"
       />
     </div>
     <CreateNote
+      v-if="open"
       :open="open"
+      :noteToEdit="editNote"
       @create-note="handleCreateNote"
       @close-modal="handleCloseModal"
+      @edit-note="handleEditNote"
     />
   </main>
-  <BottomTabActions :countItem="notes.length" :onlyNote="true" @create-note="handleOpenModal" />
+  <BottomTabActions
+    :countItem="notes.length"
+    :onlyNote="true"
+    @create-note="handleOpenModal"
+  />
 </template>
 
 <style scoped>
@@ -80,7 +115,7 @@ h1 {
 .notes-folder-list {
   background-color: var(--color-background);
   border-radius: 1rem;
-  padding: 0.5rem 0 0.5rem 1rem
+  padding: 0.5rem 0 0.5rem 1rem;
 }
 .note-view {
   background-color: var(--color-background-soft);

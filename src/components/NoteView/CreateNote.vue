@@ -1,11 +1,18 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import BottomNoteActions from "@/components/NoteView/BottomNoteActions.vue";
-const props = defineProps<{ open: boolean }>();
-const emit = defineEmits(["close-modal", "create-note"]);
+import { uid } from "uid";
+import type { Note } from "@/types";
 
-const newNote = ref("");
-const errorMessage = ref("");
+const props = defineProps<{
+  open: boolean;
+  noteToEdit?: Note;
+}>();
+
+const emit = defineEmits(["close-modal", "create-note", "edit-note"]);
+
+const newNote = ref(props.noteToEdit?.content ?? "");
+
 const createdDate = ref(
   new Intl.DateTimeFormat("it-IT", {
     dateStyle: "long",
@@ -14,18 +21,25 @@ const createdDate = ref(
 );
 
 const handleCreateNote = () => {
-  if (newNote.value) {
-    emit("create-note", newNote.value);
+  if (props.noteToEdit) {
+    emit("edit-note", {
+      id: props.noteToEdit.id,
+      content: newNote.value,
+      createdAt: createdDate.value,
+    });
   } else {
-    errorMessage.value = "Inserisci un nome valido";
+    emit("create-note", {
+      id: uid(),
+      content: newNote.value,
+      createdAt: createdDate.value,
+    });
   }
 };
-
 </script>
 
 <template>
   <v-dialog
-    :model-value="props.open"
+    v-model="props.open"
     persistent
     fullscreen
     :scrim="false"
@@ -41,8 +55,15 @@ const handleCreateNote = () => {
         >
           Annulla
         </v-btn>
-        <v-toolbar-title>Nuova nota</v-toolbar-title>
-        <v-btn :disabled="!newNote.length" variant="text" color="orange" @click="handleCreateNote"
+        <v-toolbar-title v-if="noteToEdit">{{
+          noteToEdit.content
+        }}</v-toolbar-title>
+        <v-toolbar-title v-else>Nuova nota</v-toolbar-title>
+        <v-btn
+          :disabled="!newNote.length || props.noteToEdit?.content === newNote"
+          variant="text"
+          color="orange"
+          @click="handleCreateNote"
           >Salva</v-btn
         >
       </v-toolbar>

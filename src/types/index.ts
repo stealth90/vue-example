@@ -15,7 +15,8 @@ export type NewTodo = {
 
 export type Note = {
   id: string;
-  name: string;
+  content: string;
+  createdAt: string;
 };
 
 export type NewNote = {
