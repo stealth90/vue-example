@@ -37,14 +37,14 @@ export const bottomRoutes: AppRoutes = [
   {
     path: "/",
     name: RoutesNames.TODO_LIST,
-    icon: "ri:todo-line",
+    icon: "mdi:todo-add",
     activeIcon: "ri:todo-fill",
     component: TodoListView,
   },
   {
     path: "/folders",
-    name: RoutesNames.FOLDERS,
-    icon: "mdi-heart",
+    name: RoutesNames.NOTES,
+    icon: "ph:note",
     activeIcon: "mdi-heart-outline",
     component: () => import("@/views/FolderView.vue"),
   },
